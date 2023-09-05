@@ -1,6 +1,7 @@
 package com.veda.myplaylist.playlist
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,13 +12,24 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.veda.myplaylist.R
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class PlaylistFragment : Fragment() {
 
     private var columnCount = 1
     private lateinit var viewModel: PlaylistViewModel
     private lateinit var viewModelFactory: PlaylistViewModelFactory
-    private lateinit var repository: PlaylistRepository
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://openwhyd.org/")
+        .client(OkHttpClient())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val api = retrofit.create(PlaylistAPI::class.java)
+    private var service = PlaylistService(api)
+    private val repository = PlaylistRepository(service)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +48,12 @@ class PlaylistFragment : Fragment() {
                             columnCount <= 1 -> LinearLayoutManager(context)
                             else -> GridLayoutManager(context, columnCount)
                         }
+                        println(it);
                         adapter = MyPlaylistRecyclerViewAdapter(it.getOrNull()!!)
                     }
                 }
-            }else{
-
+            } else {
+                Log.d("Erro", it.isFailure.toString())
             }
         }
 
@@ -57,5 +70,5 @@ class PlaylistFragment : Fragment() {
         @JvmStatic
         fun newInstance() =
             PlaylistFragment().apply {}
-            }
     }
+}

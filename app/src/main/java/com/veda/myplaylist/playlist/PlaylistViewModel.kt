@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class PlaylistViewModel(
-    repository: PlaylistRepository
+   private val repository: PlaylistRepository
 ) : ViewModel() {
     val playlists = liveData<Result<List<Playlist>>> {
         emitSource(
