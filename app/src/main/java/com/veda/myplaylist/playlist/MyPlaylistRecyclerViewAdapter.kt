@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.veda.myplaylist.R
 import com.veda.myplaylist.databinding.PlaylistItemBinding
 
 
@@ -21,14 +22,13 @@ class MyPlaylistRecyclerViewAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.playListName.text = item.name
         holder.playListUname.text = item.uNm
-        //holder.playListImage.setImageResource(R.drawable.ic_launcher_background);
+        holder.playListImage.setImageResource(R.drawable.ic_launcher_background);
 
     }
 
