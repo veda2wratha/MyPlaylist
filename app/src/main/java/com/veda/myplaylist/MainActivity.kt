@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeLoader() {
-        val loader: ProgressBar = findViewById(R.id.load)
+        val loader: ProgressBar = findViewById(R.id.loader)
         viewModel.loader.observe(this as LifecycleOwner) { loading ->
             when (loading) {
                 true -> loader.visibility = View.VISIBLE

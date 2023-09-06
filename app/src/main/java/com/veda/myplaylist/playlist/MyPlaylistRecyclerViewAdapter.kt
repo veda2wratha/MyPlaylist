@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.veda.myplaylist.R
 import com.veda.myplaylist.databinding.PlaylistItemBinding
 
@@ -28,7 +30,10 @@ class MyPlaylistRecyclerViewAdapter(
         val item = values[position]
         holder.playListName.text = item.name
         holder.playListUname.text = item.uNm
-        holder.playListImage.setImageResource(R.drawable.ic_launcher_background);
+        holder.playListImage.load(item.img){crossfade(true)
+        placeholder(R.drawable.ic_launcher_foreground)
+            error(R.drawable.ic_launcher_foreground)
+        transformations(CircleCropTransformation())}
 
     }
 
